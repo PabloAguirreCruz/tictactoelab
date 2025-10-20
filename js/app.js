@@ -29,9 +29,10 @@ let tie = false;
 
 const squareEls = document.querySelectorAll('.sqr');
 const messageEl = document.querySelector('#message');
+const resetButton = document.querySelector('#reset');
 console.log('Squares', squareEls); 
 console.log('message', messageEl);
-
+console.log('reset', resetButton);
 /*-------------------------------- Functions --------------------------------*/
 
 //4) The state of the game should be rendered to the user.
@@ -88,11 +89,11 @@ function updateMessage(){
   
 
     // if winner is false and tie is true, show 'Tie!'
-    messageEl,textContent = "It's a Tie!"; 
+    messageEl.textContent = "It's a Tie!"; 
       } else {
 
     // else show who wins
-    messageEl.textContent = "You win!"; 
+    messageEl.textContent = turn + " You win!"; 
       }
 }
 
@@ -126,6 +127,7 @@ function checkForWinner(){
             board[winningCombo[0]] === board[winningCombo[2]]
         ) {
             winner = true; 
+            playConfetti();
         }
     })
 
@@ -159,6 +161,34 @@ function placePiece(index){
 
 }
 
+function playConfetti() {
+    confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+
+    setTimeout(() => {
+        confetti({
+        particleCount: 50,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 }
+    });
+}, 250);
+
+
+    setTimeout(() => {
+        confetti({
+        particleCount: 50,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 }
+    });
+}, 400);
+
+}
+
 /*----------------------------- Event Listeners -----------------------------*/
 
 //3) Upon loading, the game state should be initialized, and a function should 
@@ -172,7 +202,7 @@ for(let i=0; i < squareEls.length; i++){
 }
 
 
-
+resetButton.addEventListener('click', init);
 
 
 init();
